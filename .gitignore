@@ -1,0 +1,52 @@
+# Dependencies
+node_modules/
+*/node_modules/
+venv/
+*/venv/
+__pycache__/
+*/__pycache__/
+*.py[cod]
+*$py.class
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Database
+*.sqlite3
+db.sqlite3
+
+# Media files
+media/
+staticfiles/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Testing
+coverage/
+.nyc_output/
+
