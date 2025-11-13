@@ -20,13 +20,14 @@ import {
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
 // X-Company header: nombre del tenant (Company.name) - requerido por django-tenants
 // IMPORTANTE: Crea un archivo .env en la raíz de ssr/ con: REACT_APP_COMPANY_NAME=nombre_del_tenant
-const X_COMPANY_HEADER = process.env.REACT_APP_COMPANY_NAME || 'default';
+// const X_COMPANY_HEADER = process.env.REACT_APP_COMPANY_NAME || 'default';
+const API_KEY = process.env.REACT_APP_API_KEY || '';
 
 // Log para debug (solo en desarrollo)
 if (process.env.NODE_ENV === 'development') {
   console.log('🔧 API Configuration:', {
     baseURL: API_BASE_URL,
-    'X-Company': X_COMPANY_HEADER,
+  //  'X-Company': X_COMPANY_HEADER,
     warning: '⚠️ Si ves "default", crea un archivo .env con REACT_APP_COMPANY_NAME=nombre_del_tenant'
   });
 }
@@ -39,7 +40,8 @@ class PropertyAPIService {
       baseURL: API_BASE_URL,
       headers: {
         'Content-Type': 'application/json',
-        'X-Company': X_COMPANY_HEADER, // Requerido por el middleware de django-tenants
+        //'X-Company': X_COMPANY_HEADER, // Requerido por el middleware de django-tenants
+        'Authorization': `Api-Key ${API_KEY}`,
       },
       timeout: 10000,
     });
@@ -99,7 +101,7 @@ class PropertyAPIService {
     }
 
     const response = await this.client.get<PropertyListResponse>(
-      `/properties/?${params.toString()}`
+      `/web-properties/?${params.toString()}`
     );
     return response.data;
   }
