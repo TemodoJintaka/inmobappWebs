@@ -110,7 +110,7 @@ class PropertyAPIService {
    * Get single property by ID
    */
   async getProperty(id: number): Promise<RealProperty> {
-    const response = await this.client.get<RealProperty>(`/properties/${id}/`);
+    const response = await this.client.get<RealProperty>(`/web-properties/${id}/`);
     return response.data;
   }
 
@@ -122,7 +122,7 @@ class PropertyAPIService {
    * Get types of properties (Casa, Apartamento, etc.)
    */
   async getPropertyTypes(): Promise<TypeProperty[]> {
-    const response = await this.client.get<any>('/property-types/');
+    const response = await this.client.get<any>('/web-property-types/');
     const data = response.data;
     // El endpoint puede devolver un objeto paginado o un array directo
     if (Array.isArray(data)) {
@@ -137,7 +137,7 @@ class PropertyAPIService {
    * Get types of negotiations (Venta, Alquiler)
    */
   async getNegotiationTypes(): Promise<TypeNegotiation[]> {
-    const response = await this.client.get<any>('/type-negotiations/');
+    const response = await this.client.get<any>('/web-type-negotiations/');
     const data = response.data;
     // El endpoint puede devolver un objeto paginado o un array directo
     if (Array.isArray(data)) {
@@ -164,8 +164,7 @@ class PropertyAPIService {
    * Get states
    */
   async getStates(countryId?: number): Promise<State[]> {
-    const params = countryId ? `?country=${countryId}` : '';
-    const url = params ? `/states/${params}` : '/states/';
+    const url = countryId ? `/web-states/?country=${countryId}` : '/web-states/';
     const response = await this.client.get<any>(url);
     // El endpoint puede devolver un objeto paginado o un array directo
     const data = response.data;
@@ -183,7 +182,7 @@ class PropertyAPIService {
    */
   async getMunicipalities(stateId: number): Promise<Municipality[]> {
     const response = await this.client.get<any>(
-      `/municipalities/?state=${stateId}`
+      `/web-municipalities/?state=${stateId}`
     );
     // El endpoint devuelve un objeto paginado
     const data = response.data;
@@ -200,7 +199,7 @@ class PropertyAPIService {
    */
   async getParishes(municipalityId: number): Promise<Parish[]> {
     const response = await this.client.get<any>(
-      `/parishes/?municipality=${municipalityId}`
+      `/web-parishes/?municipality=${municipalityId}`
     );
     // El endpoint devuelve un objeto paginado
     const data = response.data;
