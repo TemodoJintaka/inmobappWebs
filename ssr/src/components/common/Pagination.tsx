@@ -70,7 +70,7 @@ export const Pagination: React.FC<PaginationProps> = ({
             className={`
               px-4 py-2 rounded-lg border
               ${currentPage === page 
-                ? 'bg-blue-600 text-white border-blue-600' 
+                ? 'bg-[#7367F0] text-white border-[#7367F0]' 
                 : 'border-gray-300 hover:bg-gray-50'
               }
             `}

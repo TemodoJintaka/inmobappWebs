@@ -135,6 +135,10 @@ export interface PropertyFilters {
   city?: number; // Deprecated - kept for backward compatibility
   min_price?: number;
   max_price?: number;
+  min_total_area?: number; // Área total mínima
+  max_total_area?: number; // Área total máxima
+  bedrooms?: number; // Número mínimo de habitaciones
+  bathrooms?: number; // Número mínimo de baños
   characteristics?: Record<string, string | number | boolean>;
   assigned_to?: number;
   page?: number;

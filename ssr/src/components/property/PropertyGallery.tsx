@@ -57,7 +57,7 @@ export const PropertyGallery: React.FC<PropertyGalleryProps> = ({ images, proper
                 key={image.id}
                 className={`
                   relative h-20 rounded-lg overflow-hidden cursor-pointer
-                  ${selectedIndex === index ? 'ring-4 ring-blue-600' : 'ring-2 ring-gray-200'}
+                  ${selectedIndex === index ? 'ring-4 ring-[#7367F0]' : 'ring-2 ring-gray-200'}
                 `}
                 onClick={() => setSelectedIndex(index)}
               >

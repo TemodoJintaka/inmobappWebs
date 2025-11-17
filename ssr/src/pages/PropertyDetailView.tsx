@@ -1,13 +1,11 @@
 // ============================================
-// PROPERTY DETAIL PAGE
+// PROPERTY DETAIL VIEW PAGE (Public - Sin contacto)
 // ============================================
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { PropertyGallery } from '../components/property/PropertyGallery';
-import { AgentInfo } from '../components/property/AgentInfo';
 import { Button, Loading } from '../components/common';
-import { useFavorites } from '../hooks/useFavorites';
 import { RealProperty, PropertyCharacteristic } from '../types';
 import { propertyAPI } from '../services/api';
 import { 
@@ -17,10 +15,9 @@ import {
   insertStructuredData 
 } from '../utils/seo';
 
-export const PropertyDetail: React.FC = () => {
+export const PropertyDetailView: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { isFavorite, toggleFavorite } = useFavorites();
   const [property, setProperty] = useState<RealProperty | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -148,9 +145,9 @@ export const PropertyDetail: React.FC = () => {
           </ol>
         </nav>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="space-y-6">
             {/* Gallery */}
             <PropertyGallery images={property.images} propertyName={property.name} />
 
@@ -294,45 +291,11 @@ export const PropertyDetail: React.FC = () => {
                   })}</p>
                 )}
               </div>
-            </div>
-          </div>
-
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-24 space-y-6">
-              {/* Agent Info */}
-              <AgentInfo agent={property.assigned_to} franchise={property.franchise} />
 
               {/* Quick Actions */}
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-xl font-bold text-gray-800 mb-4">Acciones</h3>
-                <div className="space-y-3">
+              <div className="mt-6 pt-6 border-t">
+                <div className="flex justify-center">
                   <Button 
-                    fullWidth
-                    onClick={() => property && toggleFavorite(property.id)}
-                    variant={isFavorite(property?.id || 0) ? 'primary' : 'outline'}
-                  >
-                    <div className="flex items-center justify-center gap-2">
-                      <svg 
-                        className="w-5 h-5" 
-                        fill={isFavorite(property?.id || 0) ? 'currentColor' : 'none'} 
-                        stroke="currentColor" 
-                        viewBox="0 0 24 24"
-                      >
-                        <path 
-                          strokeLinecap="round" 
-                          strokeLinejoin="round" 
-                          strokeWidth={2} 
-                          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" 
-                        />
-                      </svg>
-                      <span>
-                        {isFavorite(property?.id || 0) ? 'Quitar de Favoritos' : 'Agregar a Favoritos'}
-                      </span>
-                    </div>
-                  </Button>
-                  <Button 
-                    fullWidth
                     onClick={async () => {
                       try {
                         await navigator.clipboard.writeText(window.location.href);

@@ -7,6 +7,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { PropertyCard } from '../components/property/PropertyCard';
 import { PropertyFilters } from '../components/property/PropertyFilters';
 import { Pagination, Loading } from '../components/common';
+import { useFiltersStorage } from '../hooks/useFiltersStorage';
 import { RealProperty, PropertyFilters as PropertyFiltersType } from '../types';
 import { propertyAPI } from '../services/api';
 import { updateMetaTags, generateListingMetaTags } from '../utils/seo';
@@ -16,6 +17,7 @@ const PAGE_SIZE = 12;
 export const PropertyList: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+  const { loadFilters } = useFiltersStorage();
   
   const [properties, setProperties] = useState<RealProperty[]>([]);
   const [totalCount, setTotalCount] = useState(0);
@@ -25,7 +27,7 @@ export const PropertyList: React.FC = () => {
 
   useEffect(() => {
     // Parse filters from URL params
-    const urlFilters: PropertyFiltersType = {
+    let urlFilters: PropertyFiltersType = {
       search: searchParams.get('search') || undefined,
       type_property: searchParams.get('type_property') ? parseInt(searchParams.get('type_property')!) : undefined,
       type_negotiation: searchParams.get('type_negotiation') ? parseInt(searchParams.get('type_negotiation')!) : undefined,
@@ -36,13 +38,36 @@ export const PropertyList: React.FC = () => {
       city: searchParams.get('city') ? parseInt(searchParams.get('city')!) : undefined,
       min_price: searchParams.get('min_price') ? parseFloat(searchParams.get('min_price')!) : undefined,
       max_price: searchParams.get('max_price') ? parseFloat(searchParams.get('max_price')!) : undefined,
+      min_total_area: searchParams.get('min_total_area') ? parseFloat(searchParams.get('min_total_area')!) : undefined,
+      max_total_area: searchParams.get('max_total_area') ? parseFloat(searchParams.get('max_total_area')!) : undefined,
+      bedrooms: searchParams.get('bedrooms') ? parseInt(searchParams.get('bedrooms')!) : undefined,
+      bathrooms: searchParams.get('bathrooms') ? parseInt(searchParams.get('bathrooms')!) : undefined,
       page: searchParams.get('page') ? parseInt(searchParams.get('page')!) : 1,
     };
+
+    // Si no hay parámetros en la URL, intentar cargar filtros guardados
+    if (searchParams.toString() === '' || (searchParams.toString() === 'page=1')) {
+      const savedFilters = loadFilters();
+      if (savedFilters) {
+        urlFilters = { ...savedFilters, page: urlFilters.page || 1 };
+        // Aplicar filtros guardados a la URL
+        const params = new URLSearchParams();
+        Object.entries(savedFilters).forEach(([key, value]) => {
+          if (value !== undefined && value !== null && value !== '') {
+            params.set(key, String(value));
+          }
+        });
+        if (urlFilters.page && urlFilters.page > 1) {
+          params.set('page', String(urlFilters.page));
+        }
+        setSearchParams(params, { replace: true });
+      }
+    }
 
     setFilters(urlFilters);
     setCurrentPage(urlFilters.page || 1);
     loadProperties(urlFilters);
-  }, [searchParams]);
+  }, [searchParams, loadFilters, setSearchParams]);
 
   const loadProperties = async (currentFilters: PropertyFiltersType) => {
     setLoading(true);

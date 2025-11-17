@@ -4,6 +4,7 @@
 
 import React from 'react';
 import { RealProperty } from '../../types';
+import { useFavorites } from '../../hooks/useFavorites';
 
 interface PropertyCardProps {
   property: RealProperty;
@@ -11,6 +12,8 @@ interface PropertyCardProps {
 }
 
 export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick }) => {
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const favorite = isFavorite(property.id);
   const formatPrice = (price: string) => {
     return new Intl.NumberFormat('es-VE', {
       style: 'currency',
@@ -38,6 +41,11 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick })
     }
   };
 
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    toggleFavorite(property.id);
+  };
+
   return (
     <div 
       className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer"
@@ -50,18 +58,43 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick })
           alt={property.name}
           className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
         />
-        <div className="absolute top-2 left-2 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+        <div className="absolute top-2 left-2 bg-[#7367F0] text-white px-3 py-1 rounded-full text-sm font-semibold">
           {property.type_negotiation.name}
         </div>
-        <div className="absolute top-2 right-2 bg-white px-3 py-1 rounded-full text-sm font-semibold">
+        <div className="absolute top-2 right-12 bg-white px-3 py-1 rounded-full text-sm font-semibold">
           {property.type_property.name}
         </div>
+        {/* Favorite Button */}
+        <button
+          onClick={handleFavoriteClick}
+          className={`absolute top-2 right-2 p-2 rounded-full shadow-md transition-all duration-200 z-10 ${
+            favorite 
+              ? 'bg-[#FF4C51] text-white' 
+              : 'bg-white text-gray-600 hover:bg-gray-100'
+          }`}
+          aria-label={favorite ? 'Quitar de favoritos' : 'Agregar a favoritos'}
+          title={favorite ? 'Quitar de favoritos' : 'Agregar a favoritos'}
+        >
+          <svg 
+            className="w-5 h-5" 
+            fill={favorite ? 'currentColor' : 'none'} 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={2} 
+              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" 
+            />
+          </svg>
+        </button>
       </div>
 
       {/* Content */}
       <div className="p-4">
         {/* Price */}
-        <div className="text-2xl font-bold text-blue-600 mb-2">
+        <div className="text-2xl font-bold text-[#7367F0] mb-2">
           {formatPrice(property.price)}
         </div>
 

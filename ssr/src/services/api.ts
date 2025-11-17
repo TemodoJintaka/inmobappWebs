@@ -86,6 +86,12 @@ class PropertyAPIService {
           if (key === 'city') {
             // Inmobap usa 'parish' en lugar de 'city'
             backendKey = 'parish';
+          } else if (key === 'min_price') {
+            // El backend espera price__gte en lugar de min_price
+            backendKey = 'price__gte';
+          } else if (key === 'max_price') {
+            // El backend espera price__lte en lugar de max_price
+            backendKey = 'price__lte';
           }
           // search, type_property, type_negotiation, state, municipality se usan directamente
           

@@ -3,7 +3,8 @@
 // ============================================
 
 import React, { useState, useEffect } from 'react';
-import { Input, Select, Button } from '../common';
+import { Input, Select, SearchableSelect, Button } from '../common';
+import { useFiltersStorage } from '../../hooks/useFiltersStorage';
 import { 
   TypeProperty, 
   TypeNegotiation, 
@@ -23,6 +24,7 @@ export const PropertyFilters: React.FC<PropertyFiltersProps> = ({
   onFilterChange,
   initialFilters 
 }) => {
+  const { saveFilters, clearFilters } = useFiltersStorage();
   const [search, setSearch] = useState(initialFilters?.search || '');
   const [typeProperty, setTypeProperty] = useState(initialFilters?.type_property?.toString() || '');
   const [typeNegotiation, setTypeNegotiation] = useState(initialFilters?.type_negotiation?.toString() || '');
@@ -31,6 +33,10 @@ export const PropertyFilters: React.FC<PropertyFiltersProps> = ({
   const [parish, setParish] = useState(initialFilters?.parish?.toString() || '');
   const [minPrice, setMinPrice] = useState(initialFilters?.min_price?.toString() || '');
   const [maxPrice, setMaxPrice] = useState(initialFilters?.max_price?.toString() || '');
+  const [minTotalArea, setMinTotalArea] = useState(initialFilters?.min_total_area?.toString() || '');
+  const [maxTotalArea, setMaxTotalArea] = useState(initialFilters?.max_total_area?.toString() || '');
+  const [bedrooms, setBedrooms] = useState(initialFilters?.bedrooms?.toString() || '');
+  const [bathrooms, setBathrooms] = useState(initialFilters?.bathrooms?.toString() || '');
 
   // Catalogs
   const [propertyTypes, setPropertyTypes] = useState<TypeProperty[]>([]);
@@ -113,7 +119,15 @@ export const PropertyFilters: React.FC<PropertyFiltersProps> = ({
       parish: parish ? parseInt(parish) : undefined,
       min_price: minPrice ? parseFloat(minPrice) : undefined,
       max_price: maxPrice ? parseFloat(maxPrice) : undefined,
+      min_total_area: minTotalArea ? parseFloat(minTotalArea) : undefined,
+      max_total_area: maxTotalArea ? parseFloat(maxTotalArea) : undefined,
+      bedrooms: bedrooms ? parseInt(bedrooms) : undefined,
+      bathrooms: bathrooms ? parseInt(bathrooms) : undefined,
     };
+    
+    // Guardar filtros en localStorage
+    saveFilters(filters);
+    
     onFilterChange(filters);
   };
 
@@ -126,6 +140,14 @@ export const PropertyFilters: React.FC<PropertyFiltersProps> = ({
     setParish('');
     setMinPrice('');
     setMaxPrice('');
+    setMinTotalArea('');
+    setMaxTotalArea('');
+    setBedrooms('');
+    setBathrooms('');
+    
+    // Limpiar filtros guardados
+    clearFilters();
+    
     onFilterChange({});
   };
 
@@ -135,7 +157,7 @@ export const PropertyFilters: React.FC<PropertyFiltersProps> = ({
         <h2 className="text-xl font-bold text-gray-800">Filtros de Búsqueda</h2>
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="text-blue-600 hover:text-blue-700 md:hidden"
+          className="text-[#7367F0] hover:text-[#675DD8] md:hidden"
         >
           {isExpanded ? 'Ocultar' : 'Mostrar'} filtros
         </button>
@@ -177,41 +199,35 @@ export const PropertyFilters: React.FC<PropertyFiltersProps> = ({
           />
 
           {/* State */}
-          <Select
+          <SearchableSelect
             label="Estado"
+            placeholder="Buscar estado..."
             value={state}
-            onChange={(e) => setState(e.target.value)}
-            options={[
-              { value: '', label: 'Todos' },
-              ...(Array.isArray(states) ? states.map(s => ({ value: s.id, label: s.name })) : [])
-            ]}
+            onChange={(value) => setState(value)}
+            options={Array.isArray(states) ? states.map(s => ({ value: s.id, label: s.name })) : []}
             fullWidth
           />
 
           {/* Municipality */}
-          <Select
+          <SearchableSelect
             label="Municipio"
+            placeholder="Buscar municipio..."
             value={municipality}
-            onChange={(e) => setMunicipality(e.target.value)}
-            options={[
-              { value: '', label: 'Todos' },
-              ...(Array.isArray(municipalities) ? municipalities.map(m => ({ value: m.id, label: m.name })) : [])
-            ]}
+            onChange={(value) => setMunicipality(value)}
+            options={Array.isArray(municipalities) ? municipalities.map(m => ({ value: m.id, label: m.name })) : []}
             fullWidth
-            disabled={!state}
+            className={!state ? 'opacity-50 pointer-events-none' : ''}
           />
 
           {/* Parish */}
-          <Select
+          <SearchableSelect
             label="Parroquia"
+            placeholder="Buscar parroquia..."
             value={parish}
-            onChange={(e) => setParish(e.target.value)}
-            options={[
-              { value: '', label: 'Todas' },
-              ...(Array.isArray(parishes) ? parishes.map(p => ({ value: p.id, label: p.name })) : [])
-            ]}
+            onChange={(value) => setParish(value)}
+            options={Array.isArray(parishes) ? parishes.map(p => ({ value: p.id, label: p.name })) : []}
             fullWidth
-            disabled={!municipality}
+            className={!municipality ? 'opacity-50 pointer-events-none' : ''}
           />
 
           {/* Min Price */}
@@ -232,6 +248,48 @@ export const PropertyFilters: React.FC<PropertyFiltersProps> = ({
             value={maxPrice}
             onChange={(e) => setMaxPrice(e.target.value)}
             fullWidth
+          />
+
+          {/* Min Total Area */}
+          <Input
+            label="Área Total Mínima (m²)"
+            type="number"
+            placeholder="0"
+            value={minTotalArea}
+            onChange={(e) => setMinTotalArea(e.target.value)}
+            fullWidth
+          />
+
+          {/* Max Total Area */}
+          <Input
+            label="Área Total Máxima (m²)"
+            type="number"
+            placeholder="0"
+            value={maxTotalArea}
+            onChange={(e) => setMaxTotalArea(e.target.value)}
+            fullWidth
+          />
+
+          {/* Bedrooms */}
+          <Input
+            label="Habitaciones"
+            type="number"
+            placeholder="0"
+            value={bedrooms}
+            onChange={(e) => setBedrooms(e.target.value)}
+            fullWidth
+            min="0"
+          />
+
+          {/* Bathrooms */}
+          <Input
+            label="Baños"
+            type="number"
+            placeholder="0"
+            value={bathrooms}
+            onChange={(e) => setBathrooms(e.target.value)}
+            fullWidth
+            min="0"
           />
         </div>
 
