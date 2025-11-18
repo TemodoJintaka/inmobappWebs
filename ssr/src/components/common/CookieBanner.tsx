@@ -11,6 +11,11 @@ export const CookieBanner: React.FC = () => {
   const { cookiesAccepted, acceptCookies } = useCookies();
   const [isVisible, setIsVisible] = React.useState(!cookiesAccepted);
 
+  // Actualizar la visibilidad cuando cambie el estado de cookiesAccepted
+  React.useEffect(() => {
+    setIsVisible(!cookiesAccepted);
+  }, [cookiesAccepted]);
+
   const handleAccept = () => {
     acceptCookies();
     setIsVisible(false);
@@ -18,7 +23,7 @@ export const CookieBanner: React.FC = () => {
 
   const handleDecline = () => {
     setIsVisible(false);
-    // Si rechaza, no guardamos nada y el banner no aparecerá hasta que limpie localStorage
+    // Si rechaza, no guardamos nada y el banner no aparecerá hasta que limpie las cookies
   };
 
   if (!isVisible) {

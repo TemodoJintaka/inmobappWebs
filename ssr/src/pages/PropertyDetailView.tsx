@@ -176,7 +176,7 @@ export const PropertyDetailView: React.FC = () => {
                   <span>{property.address}</span>
                 </div>
                 <div className="text-gray-600 text-sm">
-                  {property.city?.name && `${property.city.name}, `}
+                  {property.parish?.name && `${property.parish.name}, `}
                   {property.municipality?.name && `${property.municipality.name}, `}
                   {property.state.name}
                 </div>

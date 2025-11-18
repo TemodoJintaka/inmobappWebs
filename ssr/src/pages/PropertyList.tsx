@@ -34,8 +34,6 @@ export const PropertyList: React.FC = () => {
       state: searchParams.get('state') ? parseInt(searchParams.get('state')!) : undefined,
       municipality: searchParams.get('municipality') ? parseInt(searchParams.get('municipality')!) : undefined,
       parish: searchParams.get('parish') ? parseInt(searchParams.get('parish')!) : undefined,
-      // Backward compatibility: also check 'city' param
-      city: searchParams.get('city') ? parseInt(searchParams.get('city')!) : undefined,
       min_price: searchParams.get('min_price') ? parseFloat(searchParams.get('min_price')!) : undefined,
       max_price: searchParams.get('max_price') ? parseFloat(searchParams.get('max_price')!) : undefined,
       min_total_area: searchParams.get('min_total_area') ? parseFloat(searchParams.get('min_total_area')!) : undefined,

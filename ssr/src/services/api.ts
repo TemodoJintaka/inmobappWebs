@@ -11,7 +11,6 @@ import {
   TypeNegotiation,
   State,
   Municipality,
-  City,
   Parish,
   Characteristic,
 } from '../types';
@@ -83,10 +82,7 @@ class PropertyAPIService {
           let backendKey = key;
           
           // El backend de inmobap usa estos nombres directamente
-          if (key === 'city') {
-            // Inmobap usa 'parish' en lugar de 'city'
-            backendKey = 'parish';
-          } else if (key === 'min_price') {
+          if (key === 'min_price') {
             // El backend espera price__gte en lugar de min_price
             backendKey = 'price__gte';
           } else if (key === 'max_price') {
@@ -214,16 +210,6 @@ class PropertyAPIService {
     } else if (data && Array.isArray(data.results)) {
       return data.results;
     }
-    return [];
-  }
-
-  /**
-   * Get cities by municipality (deprecated - inmobap uses parishes)
-   * @deprecated Use getParishes instead
-   */
-  async getCities(_municipalityId: number): Promise<City[]> {
-    // Inmobap doesn't have a cities endpoint, return empty array
-    // or use parishes as alternative
     return [];
   }
 }

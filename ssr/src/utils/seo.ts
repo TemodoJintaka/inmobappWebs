@@ -32,8 +32,8 @@ export const generatePropertyMetaTags = (property: RealProperty): MetaTags => {
   const typePropertyName = property.type_property?.name || 'Propiedad';
   const stateName = property.state?.name || '';
   const negotiationName = property.type_negotiation?.name || '';
-  const cityName = property.city?.name || '';
-  
+  const parishName = property.parish?.name || '';
+
   const title = `${property.name} - ${typePropertyName}${stateName ? ` en ${stateName}` : ''}`;
   const description = `${negotiationName} - ${typePropertyName} en ${property.address || ''}${stateName ? `, ${stateName}` : ''}. Precio: ${price}. ${(property.description || '').substring(0, 150)}...`;
   
@@ -41,7 +41,7 @@ export const generatePropertyMetaTags = (property: RealProperty): MetaTags => {
     typePropertyName.toLowerCase(),
     negotiationName.toLowerCase(),
     stateName.toLowerCase(),
-    cityName.toLowerCase(),
+    parishName.toLowerCase(),
     'inmuebles',
     'bienes raíces',
     'propiedades',
@@ -99,7 +99,7 @@ export const generatePropertyStructuredData = (property: RealProperty) => {
     address: {
       '@type': 'PostalAddress',
       streetAddress: property.address || '',
-      addressLocality: property.city?.name || '',
+      addressLocality: property.parish?.name || '',
       addressRegion: property.state?.name || '',
       addressCountry: property.country?.name || 'Venezuela',
     },

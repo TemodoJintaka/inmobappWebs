@@ -11,7 +11,6 @@ export interface Country extends Location {}
 export interface State extends Location {}
 export interface Municipality extends Location {}
 export interface Parish extends Location {}
-export interface City extends Location {}
 
 export interface Category {
   id: number;
@@ -96,7 +95,6 @@ export interface RealProperty {
   state: State;
   municipality?: Municipality;
   parish?: Parish;
-  city?: City;
   address: string;
   owner?: Client;
   characteristics: PropertyCharacteristic[];
@@ -132,7 +130,6 @@ export interface PropertyFilters {
   state?: number;
   municipality?: number;
   parish?: number; // Inmobap uses parish instead of city
-  city?: number; // Deprecated - kept for backward compatibility
   min_price?: number;
   max_price?: number;
   min_total_area?: number; // Área total mínima
@@ -161,7 +158,6 @@ export interface PropertyFilterFormData {
   type_negotiation: string;
   state: string;
   municipality: string;
-  city: string;
   min_price: string;
   max_price: string;
 }
