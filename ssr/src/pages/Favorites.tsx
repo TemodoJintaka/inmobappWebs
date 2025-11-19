@@ -111,7 +111,7 @@ export const Favorites: React.FC = () => {
             </p>
             <button
               onClick={() => navigate('/propiedades')}
-              className="px-6 py-3 bg-[#7367F0] text-white font-semibold rounded-lg hover:bg-[#675DD8] transition-all duration-200 shadow-lg hover:shadow-xl"
+              className="px-6 py-3 bg-[#ec7734] text-white font-semibold rounded-lg hover:bg-[#d66a2e] transition-all duration-200 shadow-lg hover:shadow-xl"
             >
               Explorar Propiedades
             </button>

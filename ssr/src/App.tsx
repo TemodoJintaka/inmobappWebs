@@ -20,7 +20,7 @@ const App: React.FC = () => {
               <Route path="/" element={<Home />} />
               <Route path="/propiedades" element={<PropertyList />} />
               <Route path="/propiedades/:id" element={<PropertyDetail />} />
-              <Route path="/v/:id" element={<PropertyDetailView />} />
+              <Route path="/propiedades/:id/sincontacto/" element={<PropertyDetailView />} />
               <Route path="/favoritos" element={<Favorites />} />
               <Route path="/terminos-y-condiciones" element={<TermsAndConditions />} />
             </Routes>

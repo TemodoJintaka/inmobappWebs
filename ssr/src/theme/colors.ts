@@ -4,13 +4,13 @@
 // ============================================
 
 export const inmobappColors = {
-  // Primary colors - Púrpura característico de InmobApp
+  // Primary colors - Naranja característico de InmobApp
   primary: {
-    main: '#7367F0',
-    light: '#8F85F3',
-    dark: '#675DD8',
-    lighter: 'rgba(115, 103, 240, 0.08)',
-    lightOpacity: 'rgba(115, 103, 240, 0.16)',
+    main: '#ec7734',
+    light: '#f09558',
+    dark: '#d66a2e',
+    lighter: 'rgba(236, 119, 52, 0.08)',
+    lightOpacity: 'rgba(236, 119, 52, 0.16)',
   },
   
   // Secondary colors
@@ -68,12 +68,14 @@ export const inmobappColors = {
 
 // CSS Classes helpers para usar con Tailwind
 export const primaryClasses = {
-  bg: 'bg-[#7367F0]',
-  bgHover: 'hover:bg-[#675DD8]',
-  text: 'text-[#7367F0]',
-  textHover: 'hover:text-[#7367F0]',
-  border: 'border-[#7367F0]',
-  ring: 'ring-[#7367F0]',
+  bg: 'bg-[#ec7734]',
+  bgHover: 'hover:bg-[#d66a2e]',
+  text: 'text-[#ec7734]',
+  textHover: 'hover:text-[#ec7734]',
+  border: 'border-[#ec7734]',
+  ring: 'ring-[#ec7734]',
+  focus: 'focus:ring-[#ec7734]',
+  bgLight: 'bg-[#ec7734]/10',
 };
 
 export const secondaryClasses = {

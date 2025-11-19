@@ -5,6 +5,7 @@
 import React from 'react';
 import { RealProperty } from '../../types';
 import { useFavorites } from '../../hooks/useFavorites';
+import { primaryClasses } from '../../theme/colors';
 
 interface PropertyCardProps {
   property: RealProperty;
@@ -58,7 +59,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick })
           alt={property.name}
           className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
         />
-        <div className="absolute top-2 left-2 bg-[#7367F0] text-white px-3 py-1 rounded-full text-sm font-semibold">
+        <div className={`absolute top-2 left-2 ${primaryClasses.bg} text-white px-3 py-1 rounded-full text-sm font-semibold`}>
           {property.type_negotiation.name}
         </div>
         <div className="absolute top-2 right-12 bg-white px-3 py-1 rounded-full text-sm font-semibold">
@@ -94,7 +95,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick })
       {/* Content */}
       <div className="p-4">
         {/* Price */}
-        <div className="text-2xl font-bold text-[#7367F0] mb-2">
+        <div className={`text-2xl font-bold ${primaryClasses.text} mb-2`}>
           {formatPrice(property.price)}
         </div>
 

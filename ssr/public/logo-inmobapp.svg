@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200">
+  <!-- Puerta/Door Icon -->
+  <g transform="translate(30, 15)">
+    <path d="M0,0 L60,0 L90,30 L90,170 L0,170 Z" fill="none" stroke="#ec7734" stroke-width="6"/>
+    <rect x="20" y="30" width="50" height="120" fill="none" stroke="#ec7734" stroke-width="6"/>
+    <line x1="30" y1="30" x2="30" y2="150" stroke="#ec7734" stroke-width="4"/>
+  </g>
+  
+  <!-- INMOB Text (Black) -->
+  <text x="150" y="130" font-family="Arial, sans-serif" font-size="85" font-weight="bold" fill="#2d3748">INMOB</text>
+  
+  <!-- APP Text (Orange) -->
+  <text x="415" y="130" font-family="Arial, sans-serif" font-size="85" font-weight="bold" fill="#ec7734">APP</text>
+</svg>
+

@@ -130,18 +130,24 @@ export const PropertyDetailView: React.FC = () => {
         <nav className="mb-6 text-sm">
           <ol className="flex items-center space-x-2 text-gray-600">
             <li>
-              <button onClick={() => navigate('/')} className="hover:text-[#7367F0]">
+              <button onClick={() => navigate('/')} className="hover:text-[#ec7734]">
                 Inicio
               </button>
             </li>
             <li>/</li>
             <li>
-              <button onClick={() => navigate('/propiedades')} className="hover:text-[#7367F0]">
+              <button onClick={() => navigate('/propiedades')} className="hover:text-[#ec7734]">
                 Propiedades
               </button>
             </li>
             <li>/</li>
-            <li className="text-gray-800 font-medium">{property.name}</li>
+            <li>
+              <button onClick={() => navigate(`/propiedades/${property.id}`)} className="hover:text-[#ec7734]">
+                {property.name}
+              </button>
+            </li>
+            <li>/</li>
+            <li className="text-gray-800 font-medium">Sin contacto</li>
           </ol>
         </nav>
 
@@ -156,7 +162,7 @@ export const PropertyDetailView: React.FC = () => {
               {/* Header */}
               <div className="border-b pb-4 mb-4">
                 <div className="flex flex-wrap items-center gap-2 mb-2">
-                  <span className="bg-[#7367F0]/10 text-[#7367F0] px-3 py-1 rounded-full text-sm font-semibold">
+                  <span className="bg-[#ec7734]/10 text-[#ec7734] px-3 py-1 rounded-full text-sm font-semibold">
                     {property.type_negotiation.name}
                   </span>
                   <span className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-semibold">
@@ -184,7 +190,7 @@ export const PropertyDetailView: React.FC = () => {
 
               {/* Price */}
               <div className="mb-6">
-                <div className="text-4xl font-bold text-[#7367F0] mb-2">
+                <div className="text-4xl font-bold text-[#ec7734] mb-2">
                   {formatPrice(property.price)}
                 </div>
                 {property.type_negotiation.name.toLowerCase().includes('venta') && parseFloat(property.rent_price) > 0 && (
@@ -195,9 +201,15 @@ export const PropertyDetailView: React.FC = () => {
               </div>
 
               {/* General Characteristics */}
-              {characteristicGroups.general.length > 0 && (
+              {characteristicGroups.general.filter(char => {
+                const value = char.get_value_display !== undefined ? char.get_value_display : char.value;
+                return value !== null && value !== undefined && value !== '';
+              }).length > 0 && (
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 pb-6 border-b">
-                  {characteristicGroups.general.map(char => (
+                  {characteristicGroups.general.filter(char => {
+                    const value = char.get_value_display !== undefined ? char.get_value_display : char.value;
+                    return value !== null && value !== undefined && value !== '';
+                  }).map(char => (
                     <div key={char.id} className="text-center">
                       <div className="text-2xl font-bold text-gray-800">
                         {char.get_value_display || char.value}
@@ -220,11 +232,17 @@ export const PropertyDetailView: React.FC = () => {
               )}
 
               {/* Dimensions */}
-              {characteristicGroups.dimensions.length > 0 && (
+              {characteristicGroups.dimensions.filter(char => {
+                const value = char.get_value_display !== undefined ? char.get_value_display : char.value;
+                return value !== null && value !== undefined && value !== '';
+              }).length > 0 && (
                 <div className="mb-6">
                   <h2 className="text-2xl font-bold text-gray-800 mb-3">Dimensiones</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {characteristicGroups.dimensions.map(char => (
+                    {characteristicGroups.dimensions.filter(char => {
+                      const value = char.get_value_display !== undefined ? char.get_value_display : char.value;
+                      return value !== null && value !== undefined && value !== '';
+                    }).map(char => (
                       <div key={char.id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
                         <span className="text-gray-700">{char.characteristic.name}</span>
                         <span className="font-semibold text-gray-800">
@@ -237,11 +255,29 @@ export const PropertyDetailView: React.FC = () => {
               )}
 
               {/* Features */}
-              {characteristicGroups.features.length > 0 && (
+              {characteristicGroups.features.filter(char => {
+                const value = char.get_value_display !== undefined ? char.get_value_display : char.value;
+                const isBool = typeof value === 'boolean';
+                // Si es booleano, solo mostrar si es true
+                if (isBool) {
+                  return value === true;
+                }
+                // Si no es booleano, mostrar solo si tiene valor (no null, undefined, o vacío)
+                return value !== null && value !== undefined && value !== '';
+              }).length > 0 && (
                 <div className="mb-6">
                   <h2 className="text-2xl font-bold text-gray-800 mb-3">Características</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {characteristicGroups.features.map(char => {
+                    {characteristicGroups.features.filter(char => {
+                      const value = char.get_value_display !== undefined ? char.get_value_display : char.value;
+                      const isBool = typeof value === 'boolean';
+                      // Si es booleano, solo mostrar si es true
+                      if (isBool) {
+                        return value === true;
+                      }
+                      // Si no es booleano, mostrar solo si tiene valor (no null, undefined, o vacío)
+                      return value !== null && value !== undefined && value !== '';
+                    }).map(char => {
                       const value = char.get_value_display !== undefined ? char.get_value_display : char.value;
                       const isBool = typeof value === 'boolean';
                       
@@ -249,20 +285,14 @@ export const PropertyDetailView: React.FC = () => {
                         <div key={char.id} className="flex items-center">
                           {isBool ? (
                             <>
-                              {value ? (
-                                <svg className="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                                </svg>
-                              ) : (
-                                <svg className="w-5 h-5 text-gray-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                                </svg>
-                              )}
+                              <svg className="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                              </svg>
                               <span className="text-gray-700">{char.characteristic.name}</span>
                             </>
                           ) : (
                             <>
-                              <svg className="w-5 h-5 text-[#7367F0] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                              <svg className="w-5 h-5 text-[#ec7734] mr-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                               </svg>
                               <span className="text-gray-700">{char.characteristic.name}: </span>

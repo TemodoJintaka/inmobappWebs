@@ -97,7 +97,7 @@ export const SearchableSelect: React.FC<SearchableSelectProps> = ({
           placeholder={selectedOption ? selectedOption.label : placeholder}
           className={`
             w-full px-4 py-2 border rounded-lg pr-10
-            focus:outline-none focus:ring-2 focus:ring-[#7367F0] focus:border-transparent
+            focus:outline-none focus:ring-2 focus:ring-[#ec7734] focus:border-transparent
             ${error ? 'border-[#FF4C51]' : 'border-gray-300'}
             ${isOpen ? 'rounded-b-none' : ''}
           `}
@@ -130,8 +130,8 @@ export const SearchableSelect: React.FC<SearchableSelectProps> = ({
                     key={option.value}
                     onClick={() => handleSelect(option.value)}
                     className={`
-                      px-4 py-2 cursor-pointer text-sm hover:bg-[#7367F0]/10 transition-colors
-                      ${String(option.value) === value ? 'bg-[#7367F0]/20 text-[#7367F0] font-medium' : 'text-gray-700'}
+                      px-4 py-2 cursor-pointer text-sm hover:bg-[#ec7734]/10 transition-colors
+                      ${String(option.value) === value ? 'bg-[#ec7734]/20 text-[#ec7734] font-medium' : 'text-gray-700'}
                     `}
                   >
                     {option.label}

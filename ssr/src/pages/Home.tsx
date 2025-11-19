@@ -51,7 +51,7 @@ export const Home: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-[#7367F0] to-[#675DD8] text-white py-20">
+      <section className="relative bg-gradient-to-r from-[#ec7734] to-[#d66a2e] text-white py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl">
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
@@ -64,16 +64,18 @@ export const Home: React.FC = () => {
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               <button
                 onClick={() => navigate('/propiedades')}
-                className="px-6 py-3 text-lg font-semibold rounded-lg bg-white text-[#7367F0] hover:bg-gray-100 transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="px-6 py-3 text-lg font-semibold rounded-lg bg-white text-[#ec7734] hover:bg-gray-100 transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 Comenzar Búsqueda
               </button>
-              <button
-                onClick={() => navigate('/propiedades?type_negotiation=1')}
-                className="px-6 py-3 text-lg font-semibold rounded-lg bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#7367F0] transition-all duration-200"
+              <a
+                href="https://inmob.app/login"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 text-lg font-semibold rounded-lg bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#ec7734] transition-all duration-200 text-center"
               >
-                Propiedades en Venta
-              </button>
+                Soy Asesor
+              </a>
             </div>
           </div>
         </div>
@@ -91,8 +93,8 @@ export const Home: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Feature 1 */}
             <div className="text-center">
-              <div className="w-16 h-16 bg-[#7367F0]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-[#7367F0]" fill="currentColor" viewBox="0 0 20 20">
+              <div className="w-16 h-16 bg-[#ec7734]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-[#ec7734]" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
                 </svg>
               </div>
@@ -104,8 +106,8 @@ export const Home: React.FC = () => {
 
             {/* Feature 2 */}
             <div className="text-center">
-              <div className="w-16 h-16 bg-[#7367F0]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-[#7367F0]" fill="currentColor" viewBox="0 0 20 20">
+              <div className="w-16 h-16 bg-[#ec7734]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-[#ec7734]" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
               </div>
@@ -117,8 +119,8 @@ export const Home: React.FC = () => {
 
             {/* Feature 3 */}
             <div className="text-center">
-              <div className="w-16 h-16 bg-[#7367F0]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-[#7367F0]" fill="currentColor" viewBox="0 0 20 20">
+              <div className="w-16 h-16 bg-[#ec7734]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-[#ec7734]" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
               </div>
@@ -140,7 +142,7 @@ export const Home: React.FC = () => {
             </h2>
             <Link 
               to="/propiedades" 
-              className="text-[#7367F0] hover:text-[#675DD8] font-semibold flex items-center"
+              className="text-[#ec7734] hover:text-[#d66a2e] font-semibold flex items-center"
             >
               Ver todas
               <svg className="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20">
@@ -166,7 +168,7 @@ export const Home: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-[#7367F0] to-[#675DD8] text-white">
+      <section className="py-16 bg-gradient-to-r from-[#ec7734] to-[#d66a2e] text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             ¿Listo para encontrar tu próximo hogar?
@@ -174,12 +176,24 @@ export const Home: React.FC = () => {
           <p className="text-xl mb-8 text-white/90">
             Explora nuestra amplia selección de propiedades y encuentra la perfecta para ti
           </p>
-          <button
-            onClick={() => navigate('/propiedades')}
-            className="px-6 py-3 text-lg font-semibold rounded-lg bg-white text-[#7367F0] hover:bg-gray-100 transition-all duration-200 shadow-lg hover:shadow-xl"
-          >
-            Ver Todas las Propiedades
-          </button>
+          <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+            <a
+              href="/propiedades?type_negotiation=1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 text-lg font-semibold rounded-lg bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#ec7734] transition-all duration-200 text-center"
+            >
+              Venta
+            </a>
+            <a
+              href="/propiedades?type_negotiation=2"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 text-lg font-semibold rounded-lg bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#ec7734] transition-all duration-200 text-center"
+            >
+              Alquiler
+            </a>
+          </div>
         </div>
       </section>
     </div>

@@ -51,23 +51,57 @@ export const PropertyFilters: React.FC<PropertyFiltersProps> = ({
     loadCatalogs();
   }, []);
 
+  // Sincronizar estados locales con initialFilters cuando cambien
+  useEffect(() => {
+    if (initialFilters) {
+      setSearch(initialFilters.search || '');
+      setTypeProperty(initialFilters.type_property?.toString() || '');
+      setTypeNegotiation(initialFilters.type_negotiation?.toString() || '');
+      setState(initialFilters.state?.toString() || '');
+      setMunicipality(initialFilters.municipality?.toString() || '');
+      setParish(initialFilters.parish?.toString() || '');
+      setMinPrice(initialFilters.min_price?.toString() || '');
+      setMaxPrice(initialFilters.max_price?.toString() || '');
+      setMinTotalArea(initialFilters.min_total_area?.toString() || '');
+      setMaxTotalArea(initialFilters.max_total_area?.toString() || '');
+      setBedrooms(initialFilters.bedrooms?.toString() || '');
+      setBathrooms(initialFilters.bathrooms?.toString() || '');
+
+      // Cargar municipios y parroquias si hay valores en initialFilters
+      if (initialFilters.state) {
+        loadMunicipalities(initialFilters.state).then(() => {
+          // Después de cargar municipios, cargar parroquias si hay municipality
+          if (initialFilters.municipality) {
+            loadParishes(initialFilters.municipality);
+          }
+        });
+      }
+    }
+  }, [initialFilters]);
+
   useEffect(() => {
     if (state) {
       loadMunicipalities(parseInt(state));
     } else {
       setMunicipalities([]);
-      setMunicipality('');
+      // Solo limpiar municipality si no hay estado en initialFilters
+      if (!initialFilters?.state) {
+        setMunicipality('');
+      }
     }
-  }, [state]);
+  }, [state, initialFilters?.state]);
 
   useEffect(() => {
     if (municipality) {
       loadParishes(parseInt(municipality));
     } else {
       setParishes([]);
-      setParish('');
+      // Solo limpiar parish si no hay municipality en initialFilters
+      if (!initialFilters?.municipality) {
+        setParish('');
+      }
     }
-  }, [municipality]);
+  }, [municipality, initialFilters?.municipality]);
 
   const loadCatalogs = async () => {
     try {
@@ -157,7 +191,7 @@ export const PropertyFilters: React.FC<PropertyFiltersProps> = ({
         <h2 className="text-xl font-bold text-gray-800">Filtros de Búsqueda</h2>
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="text-[#7367F0] hover:text-[#675DD8] md:hidden"
+          className="text-[#ec7734] hover:text-[#d66a2e] md:hidden"
         >
           {isExpanded ? 'Ocultar' : 'Mostrar'} filtros
         </button>
